@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INW Bloc Series</title>
+
+    <style>
+        :root {
+            --charcoal: #0f0f10;
+            --charcoal2: #141416;
+            --gold: #C6A64B;
+            --offwhite: #F2F2F2;
+            --muted: rgba(242, 242, 242, .72);
+            --muted2: rgba(242, 242, 242, .55);
+            --stroke: rgba(198, 166, 75, .35);
+            --shadow: 0 20px 60px rgba(0, 0, 0, .45);
+            --radius: 22px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(900px 500px at 50% 20%, rgba(198, 166, 75, .10), transparent 60%),
+                radial-gradient(700px 500px at 15% 70%, rgba(255, 255, 255, .06), transparent 55%),
+                linear-gradient(180deg, var(--charcoal), #0b0b0c 60%, #09090a);
+            color: var(--offwhite);
+            font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 18px;
+        }
+
+        /* subtle grit texture without “messy” */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: .10;
+            background-image:
+                radial-gradient(rgba(255, 255, 255, .08) 1px, transparent 1px);
+            background-size: 3px 3px;
+            mix-blend-mode: overlay;
+        }
+
+        .wrap {
+            width: min(980px, 100%);
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .015));
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: calc(var(--radius) + 2px);
+            border: 1px solid rgba(198, 166, 75, .22);
+            pointer-events: none;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            padding: 10px;
+            opacity: .9;
+        }
+
+        header {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 0;
+        }
+
+        .left {
+            padding: 42px 38px;
+            background: linear-gradient(180deg, rgba(20, 20, 22, .65), rgba(20, 20, 22, .15));
+            border-right: 1px solid rgba(255, 255, 255, .06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .watermark {
+            position: absolute;
+            right: -60px;
+            bottom: -80px;
+            width: 420px;
+            opacity: 0.06;
+            filter: grayscale(100%) brightness(1.2);
+            pointer-events: none;
+            transform: rotate(-8deg);
+        }
+
+        .right {
+            padding: 42px 38px;
+            background: linear-gradient(180deg, rgba(198, 166, 75, .08), rgba(0, 0, 0, 0));
+        }
+
+        .logo {
+            width: 180px;
+            max-width: 60%;
+            display: block;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 10px 25px rgba(0, 0, 0, .45));
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            color: var(--muted);
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            font-size: .78rem;
+            margin-bottom: 10px;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 99px;
+            background: var(--gold);
+            box-shadow: 0 0 0 4px rgba(198, 166, 75, .12);
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 4vw, 3.1rem);
+            line-height: 1.05;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.5;
+            max-width: 46ch;
+        }
+
+        .goldline {
+            width: 140px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 99px;
+            margin: 22px 0 0;
+            opacity: .95;
+        }
+
+        /* RIGHT SIDE: serious + rally */
+        .panel-title {
+            font-size: .9rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: rgba(242, 242, 242, .80);
+            margin-bottom: 14px;
+        }
+
+        .bullets {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .bullets li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            color: var(--muted);
+            line-height: 1.35;
+            font-size: .98rem;
+        }
+
+        .check {
+            color: var(--gold);
+            font-weight: 700;
+            margin-top: 1px;
+        }
+
+        .ctaRow {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn {
+            appearance: none;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .03);
+            color: var(--offwhite);
+            padding: 12px 14px;
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .03em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform .12s ease, border-color .12s ease, background .12s ease;
+            user-select: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(198, 166, 75, .55);
+            background: rgba(198, 166, 75, .10);
+        }
+
+        .btn.primary {
+            border-color: rgba(198, 166, 75, .55);
+            background: rgba(198, 166, 75, .14);
+        }
+
+        .tiny {
+            margin-top: 14px;
+            color: var(--muted2);
+            font-size: .9rem;
+            line-height: 1.45;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            padding: 18px 24px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            background: rgba(0, 0, 0, .18);
+            color: var(--muted2);
+            font-size: .85rem;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .badgeRow {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            border: 1px solid rgba(198, 166, 75, .30);
+            background: rgba(198, 166, 75, .08);
+            color: rgba(242, 242, 242, .85);
+            padding: 8px 10px;
+            border-radius: 999px;
+            font-size: .72rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 860px) {
+            header {
+                grid-template-columns: 1fr;
+            }
+
+            .left {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, .06);
+            }
+
+            .logo {
+                width: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="card">
+            <header>
+                <!-- SERIOUS: brand + official presence -->
+                <section class="left">
+                    <!-- Use your file name here -->
+                    <img class="watermark" src="images/logo.png" alt="INW Bloc Series logo" />
+
+                    <div class="eyebrow"><span class="dot"></span> 2026 Season</div>
+                    <h1>Coming Soon</h1>
+
+                    <p class="sub">
+                        A local bouldering circuit built for hard climbing, clean competition, and a stronger Inland
+                        Northwest community.
+                    </p>
+
+                    <div class="goldline"></div>
+                </section>
+
+                <!-- RALLY: quick facts + calls to action -->
+                <section class="right">
+                    <div class="panel-title">Series Snapshot</div>
+
+                    <ul class="bullets">
+                        <li><span class="check">✓</span><span>Points-based circuit across multiple gyms.</span></li>
+                        <li><span class="check">✓</span><span>Categories for adults and youth. Crown the Series
+                                Champions.</span></li>
+                        <li><span class="check">✓</span><span>Community-first energy, competition-grade
+                                execution.</span></li>
+                    </ul>
+
+                    <div class="panel-title">Get Updates</div>
+                    <div class="ctaRow">
+                        <!-- Replace these with your real links when ready -->
+                        <a class="btn primary" href="#"
+                            onclick="alert('Hook this up to your email list form (Mailchimp, ConvertKit, etc.).'); return false;">
+                            Join the list
+                        </a>
+                        <a class="btn" href="#"
+                            onclick="alert('Drop your Instagram link here when ready.'); return false;">
+                            Follow on Instagram
+                        </a>
+                    </div>
+
+                    <div class="tiny">
+                        Want to host a stop or sponsor prizes? Email:
+                        <span
+                            style="color: rgba(242,242,242,.9); text-transform:none; letter-spacing:0;">info@inwblocseries.com</span>
+                    </div>
+                </section>
+            </header>
+
+            <footer>
+                <div class="badgeRow">
+                    <span class="badge">Inland Northwest</span>
+                    <span class="badge">Bouldering Circuit</span>
+                    <span class="badge">Community + Competition</span>
+                </div>
+                <div>INW Bloc Series</div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>
